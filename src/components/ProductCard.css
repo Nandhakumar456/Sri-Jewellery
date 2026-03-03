@@ -1,0 +1,300 @@
+/* ======================================
+   PREMIUM PRODUCT CARD — Interactive Design
+   ====================================== */
+
+.product-card {
+    background: var(--color-bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.4s ease,
+        border-color 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+    /* Glow backdrop */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.product-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 17px;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent 40%, rgba(212, 175, 55, 0) 40%, rgba(212, 175, 55, 0.3) 50%, transparent 60%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.product-card:hover::before {
+    opacity: 1;
+}
+
+/* Glowing ambient light on hover */
+.product-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.product-card:hover::after {
+    opacity: 1;
+}
+
+.product-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+        0 20px 40px rgba(128, 0, 32, 0.08),
+        0 8px 16px rgba(212, 175, 55, 0.06),
+        0 0 0 1px rgba(212, 175, 55, 0.15);
+    border-color: rgba(212, 175, 55, 0.2);
+}
+
+/* Shimmer sweep effect on image */
+.card-image-wrap {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fef9f0, #f5ead6);
+}
+
+.card-image-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent);
+    transform: skewX(-15deg);
+    transition: none;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.product-card:hover .card-image-wrap::after {
+    animation: shimmer-sweep 0.8s ease-in-out;
+}
+
+@keyframes shimmer-sweep {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+.card-product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        filter 0.4s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.product-card:hover .card-product-img {
+    transform: scale(1.08);
+    filter: brightness(1.05) contrast(1.02);
+}
+
+/* Top actions */
+.card-top-actions {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.product-card:hover .card-top-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.wishlist-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--color-text-light);
+    font-size: 1.1rem;
+}
+
+.wishlist-btn:hover {
+    color: #e53935;
+    background: white;
+    transform: scale(1.15);
+    box-shadow: 0 4px 16px rgba(229, 57, 53, 0.2);
+}
+
+/* Tags with glow */
+.card-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    z-index: 3;
+    background: var(--color-maroon);
+    box-shadow: 0 2px 8px rgba(128, 0, 32, 0.3);
+    animation: tag-pulse 3s ease-in-out infinite;
+}
+
+@keyframes tag-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 2px 8px rgba(128, 0, 32, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 2px 16px rgba(128, 0, 32, 0.5);
+    }
+}
+
+/* Details section */
+.card-details {
+    padding: 16px 18px;
+    position: relative;
+    z-index: 1;
+    background: var(--color-bg-card);
+}
+
+.card-category {
+    font-size: 0.7rem;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.card-title {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.3s ease;
+    line-height: 1.4;
+}
+
+.product-card:hover .card-title {
+    color: var(--color-maroon);
+}
+
+.card-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.current-price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    letter-spacing: -0.3px;
+}
+
+.original-price {
+    font-size: 0.82rem;
+    color: var(--color-text-light);
+    text-decoration: line-through;
+}
+
+.discount-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #16a34a;
+    background: rgba(22, 163, 74, 0.08);
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+}
+
+/* Quick action bar that slides up on hover */
+.card-quick-actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    gap: 0;
+    z-index: 4;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.product-card:hover .card-quick-actions {
+    transform: translateY(0);
+}
+
+.quick-action-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: var(--color-maroon);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.2s ease;
+}
+
+.quick-action-btn:hover {
+    background: #960025;
+}
+
+.quick-action-btn.secondary {
+    background: rgba(128, 0, 32, 0.08);
+    color: var(--color-maroon);
+}
+
+.quick-action-btn.secondary:hover {
+    background: rgba(128, 0, 32, 0.15);
+}
